@@ -4,34 +4,10 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import firebase from "firebase";
+import JourneyScreen from "./journey";
+import ExploreScreen from "./explore"
 
-function ExploreScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Explore</Text>
-    </View>
-  );
-}
 
-function JourneyScreen() {
-  function handleLogout() {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        console.log(" Sign-out successful.");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Journey</Text>
-      <Button onPress={handleLogout} title="Log Out" color="#000000" />
-    </View>
-  );
-}
 const Tab = createBottomTabNavigator();
 
 export default function HomeScreen() {

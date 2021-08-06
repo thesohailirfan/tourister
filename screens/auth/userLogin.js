@@ -29,13 +29,13 @@ export default function LoginScreen({ navigation }) {
         <ImageBackground source={require('../asset/back.jpg')} resizeMode="cover" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <TextInput
                 style={{ height: 40, width: 300 , borderColor: 'gray', borderWidth: 1, textAlign: 'center' }}
-                onChangeText={text => setemail(text)}
+                onChangeText={text => setEmail(text)}
                 value={email}
                 placeholder={"Email"}
             />
             <TextInput
                 style={{ height: 40, width: 300 ,borderColor: 'gray', borderWidth: 1, textAlign: 'center' }}
-                onChangeText={text => setpassword(text)}
+                onChangeText={text => setPassword(text)}
                 value={password}
                 placeholder={"Password"}
             />
