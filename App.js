@@ -38,7 +38,7 @@ export default function App() {
   return (
     <NavigationContainer>
       {isLoaded &&
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
         {!isSignedin &&
           <React.Fragment>
             <Stack.Screen name="Login" component={LoginScreen} />

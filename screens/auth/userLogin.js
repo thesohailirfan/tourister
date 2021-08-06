@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, Button, TextInput} from 'react-native';
+import { ImageBackground, Text, View, Button, TextInput} from 'react-native';
 import firebase from 'firebase';
 
 export default function LoginScreen({navigation}) {
@@ -24,7 +24,7 @@ export default function LoginScreen({navigation}) {
     }
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ImageBackground source={require('../asset/back.jpg')} resizeMode="cover" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <TextInput
                 style={{ height: 40, width: 300 , borderColor: 'gray', borderWidth: 1, textAlign: 'center' }}
                 onChangeText={text => setemail(text)}
@@ -43,7 +43,14 @@ export default function LoginScreen({navigation}) {
                 title="Sign In"
                 color="#841584"
             />
+            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                <Text>Dont have an Account ? </Text>
+                <Button
+                    title="Create Account"
+                    onPress={() => navigation.navigate('SignUp')}
+                />
+            </View>
 
-        </View>
+        </ImageBackground>
     );
 }
