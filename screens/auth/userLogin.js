@@ -2,26 +2,28 @@ import * as React from 'react';
 import { ImageBackground, Text, View, Button, TextInput} from 'react-native';
 import firebase from 'firebase';
 
-export default function LoginScreen({navigation}) {
-    const [email, setemail] = React.useState();
-    const [password, setpassword] = React.useState();
+export default function LoginScreen({ navigation }) {
+  const [email, setEmail] = React.useState();
+  const [password, setPassword] = React.useState();
 
-    function handleSignIn(params) {
-        console.log("SignIn")
-        if(email && password) {
-            firebase.auth().signInWithEmailAndPassword(email, password)
-            .then((userCredential) => {
-                // Signed in 
-                var user = userCredential.user;
-                console.log(user)
-            })
-            .catch((error) => {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                console.log(errorMessage)
-            });
-        }
+  function handleSignIn(params) {
+    console.log("SignIn");
+    if (email && password) {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // Signed in
+          var user = userCredential.user;
+          console.log(user);
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          console.log(errorMessage);
+        });
     }
+  }
 
     return (
         <ImageBackground source={require('../asset/back.jpg')} resizeMode="cover" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
