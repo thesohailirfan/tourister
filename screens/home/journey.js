@@ -379,6 +379,7 @@ export default function JourneyScreen() {
                 name: name,
                 city: city,
                 description: description,
+                location: [location.coords.latitude,location.coords.longitude],
                 posts: posts,
               })
               .then(() => {
