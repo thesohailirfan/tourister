@@ -1,7 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
 import { Text, View, Button, TextInput, TouchableOpacity, Image, ScrollView, Dimensions, ActivityIndicator, LogBox } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import firebase from "firebase";
 import * as Location from 'expo-location';

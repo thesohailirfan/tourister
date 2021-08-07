@@ -10,6 +10,7 @@ import LoginScreen from './screens/auth/userLogin'
 import SignUpScreen from './screens/auth/userSignUp'
 import firebase from 'firebase';
 import { LogBox } from 'react-native';
+import ViewJourney from './screens/home/viewjourney';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreAllLogs();//Ignore all log notifications
 
@@ -54,6 +55,8 @@ export default function App() {
         {isSignedin &&
           <React.Fragment>
             <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="ViewJourney" component={ViewJourney} />
+            
           </React.Fragment>
         }   
            

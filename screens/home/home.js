@@ -10,6 +10,8 @@ import ExploreScreen from "./explore"
 
 const Tab = createBottomTabNavigator();
 
+
+
 export default function HomeScreen() {
   return (
     <Tab.Navigator
