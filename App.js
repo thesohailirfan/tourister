@@ -9,6 +9,9 @@ import HomeScreen from './screens/home/home'
 import LoginScreen from './screens/auth/userLogin'
 import SignUpScreen from './screens/auth/userSignUp'
 import firebase from 'firebase';
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 const Stack = createNativeStackNavigator();
 
@@ -39,17 +42,21 @@ export default function App() {
     <NavigationContainer>
       {isLoaded &&
       <Stack.Navigator screenOptions={{headerShown: false}}>
+        
         {!isSignedin &&
+
           <React.Fragment>
             <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="SignUp" component={SignUpScreen} />
+            <Stack.Screen name="SignUp" component={SignUpScreen} />  
           </React.Fragment>
         }
+         
         {isSignedin &&
           <React.Fragment>
             <Stack.Screen name="Home" component={HomeScreen} />
           </React.Fragment>
-        }        
+        }   
+           
       </Stack.Navigator>
       }
 

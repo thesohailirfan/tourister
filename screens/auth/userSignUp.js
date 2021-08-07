@@ -10,12 +10,15 @@ import {
 import firebase from "firebase";
 import { theme } from "../asset/theme";
 
+var db = firebase.firestore();
+
+
 export default function SignUpScreen({ navigation }) {
   const [email, setEmail] = React.useState();
+  const [name, setName] = React.useState();
   const [password, setPassword] = React.useState();
 
   function handleCreateAccount(params) {
-    console.log("CreateAccount");
     if (email && password) {
       firebase
         .auth()
@@ -23,12 +26,26 @@ export default function SignUpScreen({ navigation }) {
         .then((userCredential) => {
           // Signed in
           var user = userCredential.user;
-          console.log(user);
+          db.collection("users").doc(user.uid).set({
+            name: name,
+            email: email,
+            isJourney: false,
+            journeyID: "",
+          })
+          .then(() => {
+        
+              navigation.navigate("Home")
+          })
+          .catch((error) => {
+              console.error("Error writing document: ", error);
+          });
+    
         })
         .catch((error) => {
           var errorCode = error.code;
           var errorMessage = error.message;
-          console.log(errorMessage);
+    
+    
         });
     }
   }
@@ -40,6 +57,13 @@ export default function SignUpScreen({ navigation }) {
       style={styles.imageBackground}
     >
       <View style={styles.wrapper}>
+        <TextInput
+          style={styles.inputField}
+          onChangeText={(text) => setName(text)}
+          value={name}
+          placeholder={"Name"}
+          placeholderTextColor="lightgrey"
+        />
         <TextInput
           style={styles.inputField}
           onChangeText={(text) => setEmail(text)}

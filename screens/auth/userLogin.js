@@ -15,7 +15,7 @@ export default function LoginScreen({ navigation }) {
   const [password, setPassword] = React.useState();
 
   function handleSignIn(params) {
-    console.log("SignIn");
+    
     if (email && password) {
       firebase
         .auth()
@@ -23,16 +23,16 @@ export default function LoginScreen({ navigation }) {
         .then((userCredential) => {
           // Signed in
           var user = userCredential.user;
-          console.log(user);
+          
         })
         .catch((error) => {
           var errorCode = error.code;
           var errorMessage = error.message;
-          console.log(errorMessage);
+          
         });
     }
   }
-  console.log(theme.primary);
+
   return (
     <ImageBackground
       source={require("../asset/back.jpg")}
