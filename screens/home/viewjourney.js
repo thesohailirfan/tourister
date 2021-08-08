@@ -122,13 +122,25 @@ function ViewJourney({ route, navigation }) {
                             coordinate={{ latitude : marker[0] , longitude : marker[1] }}
                             title={tags[index]}
                         >
-                            <Callout onPress={()=>handleView((index === 0 || index === data.length-1) ? null : [index-1])}>
-                                <View style={{ backgroundColor: "#fff"}}>
-                                    {/* <Text >{tags[index]}</Text>
-                                    <Button onPress={()=>handleView(doc["posts"][index])} title="View More" color="#000000" /> */}
-                                    <CustomCalloutView id={ (index === 0 || index === data.length-1) ? null : index} title={tags[index]} navigation={navigation}/>
-                                </View>                                
-                            </Callout>
+                            { (index === 0 || index === data.length-1) &&
+                                <Callout>
+                                    <View style={{ backgroundColor: "#fff"}}>
+                                        {/* <Text >{tags[index]}</Text>
+                                        <Button onPress={()=>handleView(doc["posts"][index])} title="View More" color="#000000" /> */}
+                                        <CustomCalloutView id={ (index === 0 || index === data.length-1) ? null : index} title={tags[index]} navigation={navigation}/>
+                                    </View>                                
+                                </Callout>
+                            }
+                            { !(index === 0 || index === data.length-1) &&
+                                <Callout onPress={()=>handleView(index-1)}>
+                                    <View style={{ backgroundColor: "#fff"}}>
+                                        {/* <Text >{tags[index]}</Text>
+                                        <Button onPress={()=>handleView(doc["posts"][index])} title="View More" color="#000000" /> */}
+                                        <CustomCalloutView id={ (index === 0 || index === data.length-1) ? null : index} title={tags[index]} navigation={navigation}/>
+                                    </View>                                
+                                </Callout>
+                            }
+                            
                             
                         </Marker>
                     ))}  

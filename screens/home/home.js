@@ -6,6 +6,8 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import firebase from "firebase";
 import JourneyScreen from "./journey";
 import ExploreScreen from "./explore"
+import { theme } from "../asset/theme";
+import ViewProfile from "./userprofile";
 
 
 const Tab = createBottomTabNavigator();
@@ -23,17 +25,20 @@ export default function HomeScreen() {
             iconName = focused ? "journal" : "journal-outline";
           } else if (route.name === "Explore") {
             iconName = focused ? "search-circle" : "search-circle-outline";
+          }else if (route.name === "Profile") {
+            iconName = focused ? "person" : "person-outline";
           }
 
           // You can return any component that you like here!
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: "tomato",
+        tabBarActiveTintColor: theme.primaryDark,
         tabBarInactiveTintColor: "gray",
       })}
     >
       <Tab.Screen name="Journey" component={JourneyScreen} />
       <Tab.Screen name="Explore" component={ExploreScreen} />
+      <Tab.Screen name="Profile" component={ViewProfile} />
     </Tab.Navigator>
   );
 }

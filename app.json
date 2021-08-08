@@ -1,12 +1,30 @@
 {
   "expo": {
     "name": "Tourister",
-    "android":{"softwareKeyboardLayoutMode": "pan"},
-    "slug": "Tourister",
+    "slug": "tourister",
     "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./screens/asset/icon.png",
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
     "assetBundlePatterns": [
       "**/*"
-    ]
-  },
-  "name": "Tourister"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "softwareKeyboardLayoutMode": "pan",
+      "adaptiveIcon": {
+        "foregroundImage": "./screens/asset/icon.png",
+        "backgroundColor": "#000000"
+      },
+      "package": "com.blanc.tourister"
+    },
+
+    "web": {
+      "favicon": "./screens/asset/icon.png"
+    }
+  }
 }

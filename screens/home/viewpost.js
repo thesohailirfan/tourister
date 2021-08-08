@@ -9,32 +9,33 @@ function ViewPost({ route, navigation }) {
         <ScrollView style={{ flex: 1, marginTop: 50}}>
             { posts &&
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={{fontSize: 24}}> {posts.name} , {posts.city}</Text>
-                    <Text> {posts.description} </Text>
+                    <Text style={{fontSize: 24, marginTop: 25}}> {posts.name} , {posts.city}</Text>
+                    <Text style={{marginVertical: 10, fontStyle: 'italic', paddingHorizontal: 25}}> {posts.description} </Text>
                     {
                         posts.posts.map((value, index) => {
                             return (
-                              <View key={index}>
-                                <Text>{value.note}</Text>
+                              <View key={index} style={styles.posts}>
+                                <Text style={styles.captions}>{value.note}</Text>
             
                                 {value.type == "image" && (
                                   <Image
-                                    style={{ width: 200, height: 200 }}
+                                    style={styles.files}
                                     source={{
                                       uri: value.url,
                                     }}
+                                    resizeMode="cover"
                                   />
                                 )}
             
                                 {value.type == "video" && (
                                   <View>
                                     <Video
-                                      style={{ width: 200, height: 200 }}
+                                      style={styles.files}
                                       source={{
                                         uri: value.url,
                                       }}
                                       useNativeControls
-                                      resizeMode="contain"
+                                      resizeMode="cover"
                                       isLooping
                                     />
                                   </View>
@@ -50,3 +51,21 @@ function ViewPost({ route, navigation }) {
 }
 
 export default ViewPost
+
+const styles = StyleSheet.create({
+    files: {
+        width: Dimensions.get('screen').width,
+        maxHeight: 600,
+        minHeight: Dimensions.get('screen').width,
+    },
+    posts:{
+        marginVertical: 25,
+        backgroundColor: "#dedede",
+    },
+    captions:{
+        paddingVertical: 20,
+        paddingHorizontal: 10,
+        borderTopRightRadius: 50,
+        borderTopLeftRadius: 50,
+    }
+})

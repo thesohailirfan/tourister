@@ -40,7 +40,7 @@ export default function LoginScreen({ navigation }) {
     >
       <Image
         source={require("../asset/logo.png")}
-        style={{ position: "absolute", top: 70 }}
+        style={{ position: "absolute", top: 120 , height: 100, width: 100}}
       />
 
       <View style={styles.wrapper}>
@@ -78,15 +78,17 @@ export default function LoginScreen({ navigation }) {
     </ImageBackground>
   );
 }
+
 const styles = StyleSheet.create({
   imageBackground: { flex: 1, justifyContent: "center", alignItems: "center" },
   wrapper: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    marginTop: 60
   },
   inputField: {
-    height: 50,
+    height: 60,
     width: 300,
     borderRadius: 25,
     color: theme.textLight,
@@ -97,8 +99,8 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   signInBtn: {
-    width: 100,
-    height: 40,
+    width: 150,
+    height: 50,
     textAlign: "center",
     backgroundColor: theme.primary,
     borderRadius: 25,

@@ -210,14 +210,14 @@ export default function JourneyScreen() {
                   style={styles.inputField}
                   onChangeText={(text) => setname(text)}
                   value={name}
-                  placeholder={"Journey Name"}
+                  placeholder={"Journey Title"}
                   placeholderTextColor="#ffffff"
                 />
                 <TouchableOpacity
                   onPress={handleNewJourney}
                   style={styles.addBtn}
                 >
-                  <Text style={styles.signIn}>Add</Text>
+                  <Text style={styles.signIn}>Start New Journey</Text>
                 </TouchableOpacity>
               </View>
             )}
@@ -231,9 +231,7 @@ export default function JourneyScreen() {
                 <Text style={styles.signIn}>End Journey</Text>
               </TouchableOpacity>
             )}
-            <TouchableOpacity onPress={handleLogout} style={styles.logOutBtn}>
-              <Text style={styles.signIn}>Log Out</Text>
-            </TouchableOpacity>
+            
           </View>
         </ScrollView>
       )}
@@ -384,6 +382,7 @@ function GetLocations({ journey, user }) {
               city: city,
               description: description,
               posts: posts,
+              location: [location.coords.latitude, location.coords.longitude],
             })
             .then(() => {
               var docRef = db.collection("journeys").doc(journeyID);
@@ -431,7 +430,7 @@ function GetLocations({ journey, user }) {
     <View>
       {addLocation && (
         <View style={{ alignItems: "center" }}>
-          <Text>Create New Location</Text>
+          <Text style = {{fontSize: 36, fontWeight: 'bold', marginVertical: 20}}>Create new Location</Text>
 
           <TextInput
             style={styles.inputField}
@@ -459,7 +458,7 @@ function GetLocations({ journey, user }) {
             numberOfLines={3}
           />
 
-          <Text style={{ marginBottom: 20, fontSize: 20 }}>
+          <Text style={{ marginBottom: 5, fontSize: 20 }}>
             Attach some Media
           </Text>
           {file && (
@@ -508,7 +507,7 @@ function GetLocations({ journey, user }) {
           <View
             style={{
               flexDirection: "row",
-              justifyContent: "space-between",
+              justifyContent: "space-around",
               width: 250,
               marginTop: 20,
               marginBottom: 20,
@@ -520,9 +519,7 @@ function GetLocations({ journey, user }) {
             >
               <Ionicons name={"image-outline"} size={25} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleAdd} style={styles.addMediaBtn}>
-              <Text>Attach</Text>
-            </TouchableOpacity>
+            
             <TouchableOpacity
               onPress={openVideoPickerAsync}
               style={styles.mediaBtn}
@@ -530,63 +527,62 @@ function GetLocations({ journey, user }) {
               <Ionicons name={"videocam-outline"} size={25} />
             </TouchableOpacity>
           </View>
+            <TouchableOpacity onPress={handleAdd} style={styles.addMediaBtn}>
+              <Text>Attach Post</Text>
+            </TouchableOpacity>
 
-          {uploads.length > 0 && (
-            <View>
-              <Text>Uploads</Text>
+          {uploads.length > 0 && 
+            <View style={{justifyContent: "center", alignItems: "center"}}>
+              <Text style = {{fontSize: 28, fontWeight: 'bold', marginTop: 30}}>All Uploads</Text>
 
               {uploads.map((value, index) => {
-                return (
-                  <View key={index}>
-                    <Text>{value.note}</Text>
-
-                    {value.type == "image" && (
-                      <Image
-                        style={{ width: 200, height: 200 }}
-                        source={{
-                          uri: value.file,
-                        }}
-                      />
-                    )}
-
-                    {value.type == "video" && (
-                      <View>
-                        <Video
-                          style={{ width: 200, height: 200 }}
-                          source={{
-                            uri: value.file,
-                          }}
-                          useNativeControls
-                          resizeMode="contain"
-                          isLooping
-                        />
-                      </View>
-                    )}
-                  </View>
-                );
-              })}
+                            return (
+                              <View key={index} style={styles.posts}>
+                                <Text style={styles.captions}>{value.note}</Text>
+            
+                                {value.type == "image" && (
+                                  <Image
+                                    style={styles.files}
+                                    source={{
+                                      uri: value.file,
+                                    }}
+                                    resizeMode="cover"
+                                  />
+                                )}
+            
+                                {value.type == "video" && (
+                                  <View>
+                                    <Video
+                                      style={styles.files}
+                                      source={{
+                                        uri: value.file,
+                                      }}
+                                      useNativeControls
+                                      resizeMode="cover"
+                                      isLooping
+                                      automatically
+                                    />
+                                  </View>
+                                )}
+                              </View>
+                            );
+                          })
+                    }
+             
             </View>
-          )}
+          }
           <TouchableOpacity
             onPress={handleAddLocation}
-            style={[styles.addLocationBtn,{ marginBottom: 100}]}
+            style={[styles.addLocationBtn,{marginBottom: 100}]}
           >
-            <Text>Add Location</Text>
+            <Text style ={{fontSize:24}}>Upload Location</Text>
           </TouchableOpacity>
         </View>
       )}
 
-      {mainprogress > 0 && (
-        <ProgressBar
-          progress={mainprogress / 100}
-          color={"#000000"}
-          style={{ borderRadius: 20 }}
-        />
-      )}
-
       {!addLocation && !mainprogress && (
         <TouchableOpacity onPress={handleShow} style={styles.addLocationBtn}>
-          <Text>Add a Location</Text>
+          <Text style ={{fontSize:24}} >Add a Location</Text>
         </TouchableOpacity>
       )}
     </View>
@@ -594,6 +590,21 @@ function GetLocations({ journey, user }) {
 }
 
 const styles = StyleSheet.create({
+  files: {
+    width: Dimensions.get('screen').width,
+    maxHeight: 600,
+    minHeight: Dimensions.get('screen').width,
+},
+posts:{
+    marginVertical: 25,
+    backgroundColor: "#dedede",
+},
+captions:{
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+    borderTopRightRadius: 50,
+    borderTopLeftRadius: 50,
+},
   imageBackground: { flex: 1, justifyContent: "center", alignItems: "center" },
   wrapper: {
     display: "flex",
@@ -601,7 +612,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   inputField: {
-    height: 50,
+    fontSize: 18,
+    height: 60,
     width: 300,
     borderRadius: 25,
     color: theme.textLight,
@@ -621,16 +633,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   addMediaBtn: {
-    width: 60,
-    height: 40,
+    width: 150,
+    height: 50,
     textAlign: "center",
     borderRadius: 25,
+    marginVertical: 10,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: theme.primary,
   },
   addBtn: {
-    width: 100,
-    height: 40,
+    width: 250,
+    height: 60,
     textAlign: "center",
     backgroundColor: theme.primary,
     borderRadius: 25,
@@ -639,23 +653,23 @@ const styles = StyleSheet.create({
   },
   endJourneyBtn: {
     position: "absolute",
-    bottom: 4,
-    left: 4,
-    width: 70,
-    height: 70,
+    bottom: 20,
+    width: 150,
+    height: 50,
     textAlign: "center",
     backgroundColor: theme.primary,
     borderRadius: 35,
     justifyContent: "center",
     alignItems: "center",
     zIndex: 100,
+    fontSize: 24,
   },
 
   logOutBtn: {
     position: "absolute",
     bottom: 4,
     right: 4,
-    width: 70,
+    width: 150,
     height: 70,
     textAlign: "center",
     backgroundColor: theme.primary,
@@ -665,15 +679,19 @@ const styles = StyleSheet.create({
     zIndex: 100,
   },
   addLocationBtn: {
-    width: 100,
-    height: 40,
+    width: 250,
+    height: 60,
     textAlign: "center",
     backgroundColor: theme.primary,
+    borderColor: theme.primaryDark,
+    borderWidth: 3,
     borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",
+    marginVertical: 20
   },
   signIn: {
+    fontSize: 20,
     color: theme.textDark,
     textAlign: "center",
   },
