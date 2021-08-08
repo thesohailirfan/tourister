@@ -12,15 +12,16 @@ function ViewJourney({ route, navigation }) {
     const [data, setdata] = useState([])
     const [tags, settags] = useState([])
     const [coordinates, setcoordinates,] = useState([])
+    const [posts, setposts] = useState([])
     let coords = []
 
     console.log("Start")
 
     
-    function handleView(post){
-        console.log(post)
+    function handleView(index){
         navigation.navigate('ViewPosts', {
-            doc : post,
+            doc : doc["posts"][index],
+            posts : posts[index],
         });
     }
    
@@ -28,14 +29,17 @@ function ViewJourney({ route, navigation }) {
         db.collection("posts").get().then((querySnapshot) => {
             let tempdata = [];
             let temptags = [];
+            let temppost = [];
             querySnapshot.forEach((docs) => {
                 // docs.data() is never undefined for query docs snapshots
                 if(doc["posts"].includes(docs.id)){
                     console.log(docs.id, " => ", docs.data());
                     tempdata.push(docs.data()["location"])
                     temptags.push(docs.data()["name"])
+                    temppost.push(docs.data())
                 }
             });
+            setposts(temppost)
             setdata(tempdata)
             settags(temptags)
         });
@@ -118,7 +122,7 @@ function ViewJourney({ route, navigation }) {
                             coordinate={{ latitude : marker[0] , longitude : marker[1] }}
                             title={tags[index]}
                         >
-                            <Callout onPress={()=>handleView((index === 0 || index === data.length-1) ? null : doc["posts"][index-1])}>
+                            <Callout onPress={()=>handleView((index === 0 || index === data.length-1) ? null : [index-1])}>
                                 <View style={{ backgroundColor: "#fff"}}>
                                     {/* <Text >{tags[index]}</Text>
                                     <Button onPress={()=>handleView(doc["posts"][index])} title="View More" color="#000000" /> */}
