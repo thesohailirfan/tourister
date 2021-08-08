@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "Tourister",
+    "android":{"softwareKeyboardLayoutMode": "pan"},
     "slug": "Tourister",
     "version": "1.0.0",
     "assetBundlePatterns": [
