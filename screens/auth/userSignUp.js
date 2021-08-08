@@ -1,6 +1,7 @@
 import * as React from "react";
 import {
   ImageBackground,
+  Image,
   Text,
   View,
   TouchableOpacity,
@@ -11,7 +12,6 @@ import firebase from "firebase";
 import { theme } from "../asset/theme";
 
 var db = firebase.firestore();
-
 
 export default function SignUpScreen({ navigation }) {
   const [email, setEmail] = React.useState();
@@ -26,26 +26,24 @@ export default function SignUpScreen({ navigation }) {
         .then((userCredential) => {
           // Signed in
           var user = userCredential.user;
-          db.collection("users").doc(user.uid).set({
-            name: name,
-            email: email,
-            isJourney: false,
-            journeyID: "",
-          })
-          .then(() => {
-        
-              navigation.navigate("Home")
-          })
-          .catch((error) => {
+          db.collection("users")
+            .doc(user.uid)
+            .set({
+              name: name,
+              email: email,
+              isJourney: false,
+              journeyID: "",
+            })
+            .then(() => {
+              navigation.navigate("Home");
+            })
+            .catch((error) => {
               console.error("Error writing document: ", error);
-          });
-    
+            });
         })
         .catch((error) => {
           var errorCode = error.code;
           var errorMessage = error.message;
-    
-    
         });
     }
   }
@@ -56,6 +54,10 @@ export default function SignUpScreen({ navigation }) {
       resizeMode="cover"
       style={styles.imageBackground}
     >
+      <Image
+        source={require("../asset/logo.png")}
+        style={{ position: "absolute", top: 70 }}
+      />
       <View style={styles.wrapper}>
         <TextInput
           style={styles.inputField}
@@ -70,6 +72,7 @@ export default function SignUpScreen({ navigation }) {
           value={email}
           placeholder={"Email"}
           placeholderTextColor="lightgrey"
+          textContentType="emailAddress"
         />
         <TextInput
           style={styles.inputField}
@@ -77,6 +80,8 @@ export default function SignUpScreen({ navigation }) {
           value={password}
           placeholder={"Password"}
           placeholderTextColor="lightgrey"
+          textContentType="newPassword"
+          secureTextEntry={true}
         />
         <TouchableOpacity
           onPress={handleCreateAccount}
@@ -101,6 +106,7 @@ export default function SignUpScreen({ navigation }) {
 const styles = StyleSheet.create({
   imageBackground: { flex: 1, justifyContent: "center", alignItems: "center" },
   wrapper: {
+    marginTop: 20,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",

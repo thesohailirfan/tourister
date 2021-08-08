@@ -1,11 +1,13 @@
 import * as React from "react";
 import {
   ImageBackground,
+  Image,
   Text,
   View,
   TouchableOpacity,
   TextInput,
   StyleSheet,
+  Dimensions,
 } from "react-native";
 import firebase from "firebase";
 import { theme } from "../asset/theme";
@@ -15,7 +17,6 @@ export default function LoginScreen({ navigation }) {
   const [password, setPassword] = React.useState();
 
   function handleSignIn(params) {
-    
     if (email && password) {
       firebase
         .auth()
@@ -23,12 +24,10 @@ export default function LoginScreen({ navigation }) {
         .then((userCredential) => {
           // Signed in
           var user = userCredential.user;
-          
         })
         .catch((error) => {
           var errorCode = error.code;
           var errorMessage = error.message;
-          
         });
     }
   }
@@ -39,6 +38,11 @@ export default function LoginScreen({ navigation }) {
       resizeMode="cover"
       style={styles.imageBackground}
     >
+      <Image
+        source={require("../asset/logo.png")}
+        style={{ position: "absolute", top: 70 }}
+      />
+
       <View style={styles.wrapper}>
         <TextInput
           style={styles.inputField}
@@ -46,6 +50,7 @@ export default function LoginScreen({ navigation }) {
           value={email}
           placeholder={"Email"}
           placeholderTextColor="lightgrey"
+          textContentType="emailAddress"
         />
         <TextInput
           style={styles.inputField}
@@ -53,6 +58,7 @@ export default function LoginScreen({ navigation }) {
           value={password}
           placeholder={"Password"}
           placeholderTextColor="lightgrey"
+          secureTextEntry={true}
         />
 
         <TouchableOpacity onPress={handleSignIn} style={styles.signInBtn}>
